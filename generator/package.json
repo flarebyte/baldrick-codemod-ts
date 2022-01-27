@@ -8,6 +8,7 @@
   "engines": {
     "node": ">=14"
   },
+  "main": "./src/generator.mjs",
   "scripts": {
     "lint:ci": "baldrick lint ci",
     "lint": "baldrick lint check -s src",
@@ -17,16 +18,17 @@
     "test:ci": "baldrick test ci",
     "test": "baldrick test check",
     "test:cov": "baldrick test cov",
-    "test:fix": "baldrick test fix"
+    "test:fix": "baldrick test fix",
+    "generate": "ts-node .src/generator.ts"
   },
   "dependencies": {
+    "typescript": "^4.5.5",
     "fs-jetpack": "^4.3.1",
     "ts-morph": "^13.0.3",
     "ts-node": "^10.4.0"
   },
   "devDependencies": {
-    "baldrick-dev-ts": "^0.15.0",
-    "typescript": "^4.5.5"
+    "baldrick-dev-ts": "^0.15.0"
   },
   "peerDependencies": {}
 }
