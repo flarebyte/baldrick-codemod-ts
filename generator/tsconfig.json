@@ -5,7 +5,8 @@
       "moduleResolution": "node",
       "allowSyntheticDefaultImports": true,
       "diagnostics": true,
-      "extendedDiagnostics": true
+      "extendedDiagnostics": true,
+      "rootDir": "src"
     },
     "ts-node": {
       "transpileOnly": true,
