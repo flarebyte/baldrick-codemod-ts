@@ -2,7 +2,7 @@ import {
   SnippetConfigurationParam,
   SnippetHydrationOpts,
   SnippetVar,
-} from '../snippet-model';
+} from './snippet-model';
 
 export const noTransform = (opts: SnippetHydrationOpts): string => opts.code;
 

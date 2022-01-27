@@ -1,5 +1,5 @@
-import { noTransform, replaceVariables } from "./script/hydrate";
-import { Snippet } from "./snippet-model";
+import { noTransform, replaceVariables } from "./hydrate.js";
+import { Snippet } from "./snippet-model.js";
 
 export const snippets: Snippet[] = [
     {

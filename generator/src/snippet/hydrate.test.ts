@@ -3,7 +3,7 @@ import {
   SnippetConfigurationParam,
   SnippetHydrationOpts,
   SnippetVar,
-} from '../snippet-model';
+} from './snippet-model';
 import {
   noTransform,
   replaceVariables,
