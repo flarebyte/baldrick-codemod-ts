@@ -61,7 +61,6 @@
     "norm:g": "baldrick-ts generate -f cli -ga 'flarebyte' -ch 'Flarebyte.com' -cy 2022 -l MIT && yarn md:fix"
   },
   "dependencies": {
-    "execa": "^6.0.0",
     "prompts": "^2.4.2",
     "ts-morph": "^13.0.3"
   },
