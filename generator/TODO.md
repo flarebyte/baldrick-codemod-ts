@@ -13,6 +13,8 @@
 * [ ] titleCase
 * [ ] kebabCase
 * [ ] version
+* [ ] replaceAll
+
 
 ## Filter
 
@@ -31,6 +33,28 @@
 
 * [ ] convertToString
 * [ ] convertToBoolean
+
+## Collection
+
+* [ ] first
+* [ ] last
+* [ ] take
+* [ ] takeRight
+
+## Set
+
+* [ ] unique
+* [ ] union
+* [ ] intersection
+* [ ] difference
+
+## Other
+* [ ] memoize
+
+
+
+
+
 
 
 
