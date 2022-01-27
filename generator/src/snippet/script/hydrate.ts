@@ -54,9 +54,8 @@ export const replaceVariablesSafer = (opts: SnippetHydrationOpts): string => {
   const varNames = opts.variables.map((v) => v.name);
   const varValues = opts.variables.map((v) => v.value);
   // First phase, convert to special chars without any text overlap
-  for (let index = 0; index < varNames.length; index++) {
+  for (const [index, varName] of varNames.entries()) {
     const varValue = varValues[index];
-    const varName = varNames[index];
     const varSpecial = specialChars[index];
     if (
       varValue === undefined ||
@@ -68,9 +67,8 @@ export const replaceVariablesSafer = (opts: SnippetHydrationOpts): string => {
     content = replaceAll(content, varName, varSpecial);
   }
   // Second phase, convert special chars to expected value
-  for (let index = 0; index < varNames.length; index++) {
+  for (const [index, varName] of varNames.entries()) {
     const varValue = varValues[index];
-    const varName = varNames[index];
     const varSpecial = specialChars[index];
     if (
       varValue === undefined ||

@@ -4,7 +4,11 @@ import {
   SnippetHydrationOpts,
   SnippetVar,
 } from '../snippet-model';
-import { noTransform, replaceVariables, replaceWithLindenmayer } from './hydrate';
+import {
+  noTransform,
+  replaceVariables,
+  replaceWithLindenmayer,
+} from './hydrate';
 
 const createVar = (name: string, value: string): SnippetVar => ({
   name,
