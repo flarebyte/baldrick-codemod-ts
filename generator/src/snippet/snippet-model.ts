@@ -1,4 +1,6 @@
 export type SnippetVarKind = 'string' | 'choice' | 'camelCase' | 'TitleCase';
+export type HydrationKind = 'noTransform'| 'replaceVariables' | 'replaceWithLindenmayer'
+
 
 export interface SnippetVar {
   name: string;
@@ -29,5 +31,5 @@ export interface Snippet {
   variables?: SnippetVar[];
   configurations?: SnippetConfigurationParam[];
   code?: string;
-  hydrate: Hydrate;
+  hydrationKind: HydrationKind;
 }

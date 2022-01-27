@@ -1,4 +1,6 @@
 import {
+  Hydrate,
+  HydrationKind,
   SnippetConfigurationParam,
   SnippetHydrationOpts,
   SnippetVar,
@@ -130,3 +132,11 @@ export const replaceWithLindenmayer = (opts: SnippetHydrationOpts): string => {
   }
   return content;
 };
+
+export const locator = (hydrationKind: HydrationKind): Hydrate => {
+  switch(hydrationKind) {
+    case 'noTransform': return noTransform;
+    case 'replaceVariables': return replaceVariables;
+    case 'replaceWithLindenmayer': return replaceWithLindenmayer;
+  }
+}
