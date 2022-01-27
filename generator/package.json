@@ -1,30 +1,30 @@
 {
-    "name": "baldrick-codemod-ts-generator",
-    "description": "Code modification for typescript projects",
-    "version": "0.1.0",
-    "license": "MIT",
-    "private": true,
-    "type": "module",
-    "engines": {
-      "node": ">=14"
-    },
-    "scripts": {
-      "lint:ci": "baldrick lint ci",
-      "lint": "baldrick lint check -s src",
-      "lint:fix": "baldrick lint fix -s src",
-      "ready": "yarn lint && yarn test:cov && yarn outdated && yarn audit",
-      "reset": "rm -rf dist; rm -rf report",
-      "test:ci": "baldrick test ci",
-      "test": "baldrick test check",
-      "test:cov": "baldrick test cov",
-      "test:fix": "baldrick test fix"
-    },
-    "dependencies": {
-    },
-    "devDependencies": {
-      "typescript": "^4.5.5",
-      "baldrick-dev-ts": "^0.15.0"
-    },
-    "peerDependencies": {}
-  }
-  
+  "name": "baldrick-codemod-ts-generator",
+  "description": "Code modification for typescript projects",
+  "version": "0.1.0",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=14"
+  },
+  "scripts": {
+    "lint:ci": "baldrick lint ci",
+    "lint": "baldrick lint check -s src",
+    "lint:fix": "baldrick lint fix -s src",
+    "ready": "yarn lint && yarn test:cov && yarn outdated && yarn audit",
+    "reset": "rm -rf dist; rm -rf report",
+    "test:ci": "baldrick test ci",
+    "test": "baldrick test check",
+    "test:cov": "baldrick test cov",
+    "test:fix": "baldrick test fix"
+  },
+  "dependencies": {
+    "ts-morph": "^13.0.3"
+  },
+  "devDependencies": {
+    "baldrick-dev-ts": "^0.15.0",
+    "typescript": "^4.5.5"
+  },
+  "peerDependencies": {}
+}
