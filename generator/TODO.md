@@ -51,8 +51,10 @@
 ## Other
 * [ ] memoize
 
+## Advanced
 
-
+* [ ] generate unit tests for all functions in ts file
+* [ ] convert parameters of function to opts parameter
 
 
 
