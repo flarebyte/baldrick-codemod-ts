@@ -1,11 +1,12 @@
 import path from 'path';
-import jetpack from "fs-jetpack";
+import jetpack from 'fs-jetpack';
+import { Snippet } from '../snippet/snippet-model';
 
-const storeDir = './src/snippet-store/'
+const storeDir = './src/snippet-store/';
 
-export const copyAllSources = async () => {
-  const filename = path.join(storeDir, 'string/case/camel-case.ts')
-  console.log(filename)
-  const content = await jetpack.readAsync(filename, 'utf8')
-  console.log(content)
+export const readSnippet = async (snippet: Snippet): Promise<string> => {
+  const filename = path.join(storeDir, snippet.path);
+  const content =
+    (await jetpack.readAsync(filename, 'utf8')) || '// Snippet not found';
+  return content;
 };
