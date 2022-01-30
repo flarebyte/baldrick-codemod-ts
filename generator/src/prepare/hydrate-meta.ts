@@ -81,6 +81,7 @@ const hydrateSnippet = async (
   opts: GeneratorOpts,
   snippet: Snippet
 ): Promise<string> => {
+  console.log(`Processing snippet: ${snippet.path} ...`);
   const template = getMetaTemplateSource(opts);
   const snippetContent = await readSnippet(snippet);
   const code = template.getText();
@@ -131,8 +132,8 @@ const hydrateSnippet = async (
 };
 
 export const hydrateSnippets = async (opts: GeneratorOpts): Promise<void> => {
-  const snippet = opts.snippets[0];
-  if (snippet) {
-    await hydrateSnippet(opts, snippet);
-  }
+  const snippetPromises = opts.snippets.map((snippet) =>
+    hydrateSnippet(opts, snippet)
+  );
+  await Promise.all(snippetPromises);
 };
