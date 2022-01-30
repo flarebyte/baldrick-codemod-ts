@@ -17,5 +17,5 @@ export const snippetTemplate: Snippet = {
     value: 'ChangeMe'
   }],
   code: `ChangeMe`,
-    path: 'my-path'
+    path: "string/case/camel-case.ts"
 };

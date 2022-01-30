@@ -1,4 +1,9 @@
-import { Project, SourceFile, SyntaxKind } from 'ts-morph';
+import {
+  ObjectLiteralExpression,
+  Project,
+  SourceFile,
+  SyntaxKind,
+} from 'ts-morph';
 import path from 'path';
 import { Snippet } from '../snippet/snippet-model.js';
 import { readSnippet } from './copier.js';
@@ -29,6 +34,24 @@ const guessSnippetImport = (snippet: Snippet): string => {
   const prefix = '../'.repeat(levels);
   return `${prefix}snippet/snippet-model`;
 };
+
+const removeProperties = (ole: ObjectLiteralExpression, names: string[]) => {
+  names.forEach((name) => {
+    ole.getPropertyOrThrow(name).remove();
+  });
+};
+
+const setPropertyAsString = (
+  ole: ObjectLiteralExpression,
+  name: string,
+  value: string
+) => {
+  ole.addPropertyAssignment({
+    name: name,
+    initializer: JSON.stringify(value),
+  });
+};
+
 const hydrateSnippet = async (
   opts: GeneratorOpts,
   snippet: Snippet
@@ -53,11 +76,8 @@ const hydrateSnippet = async (
   const first = snippetTemplateDecl.getFirstChildByKindOrThrow(
     SyntaxKind.ObjectLiteralExpression
   );
-  first.getPropertyOrThrow('path').remove();
-  first.addPropertyAssignment({
-    name: 'path',
-    initializer: `'my-path'`,
-  });
+  removeProperties(first, ['path']);
+  setPropertyAsString(first, 'path', snippet.path);
   await destSourceFile.save();
   return code;
 };
