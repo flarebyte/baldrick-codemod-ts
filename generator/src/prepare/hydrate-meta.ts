@@ -41,10 +41,10 @@ const removeProperties = (ole: ObjectLiteralExpression, names: string[]) => {
   });
 };
 
-const setPropertyAsString = (
+const setProperty = (
   ole: ObjectLiteralExpression,
   name: string,
-  value: string
+  value: string | string[]
 ) => {
   ole.addPropertyAssignment({
     name: name,
@@ -58,7 +58,6 @@ const hydrateSnippet = async (
 ): Promise<string> => {
   const template = getMetaTemplateSource(opts);
   const snippetContent = await readSnippet(snippet);
-  console.log(snippetContent);
   const code = template.getText();
   const newImportPath = guessSnippetImport(snippet);
   const destFilename = path.join(destTemplateDir, snippet.path);
@@ -76,8 +75,20 @@ const hydrateSnippet = async (
   const first = snippetTemplateDecl.getFirstChildByKindOrThrow(
     SyntaxKind.ObjectLiteralExpression
   );
-  removeProperties(first, ['path']);
-  setPropertyAsString(first, 'path', snippet.path);
+  removeProperties(first, [
+    'path',
+    'keywords',
+    'search',
+    'description',
+    'hydrationKind',
+    'code'
+  ]);
+  setProperty(first, 'path', snippet.path);
+  setProperty(first, 'search', snippet.search);
+  setProperty(first, 'keywords', snippet.keywords);
+  setProperty(first, 'description', snippet.description);
+  setProperty(first, 'hydrationKind', snippet.hydrationKind);
+  setProperty(first, 'code', snippetContent);
   await destSourceFile.save();
   return code;
 };
