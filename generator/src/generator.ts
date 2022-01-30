@@ -1,4 +1,5 @@
 import { GeneratorOpts } from './generator-model.js';
+import { deletePreviouslyGenerated } from './prepare/copier.js';
 import {
   createDestinationProject,
   createGeneratorProject,
@@ -8,7 +9,8 @@ import { snippets } from './snippet/meta.js';
 
 console.log('prepare');
 const generate = async () => {
-  console.log('hi');
+  console.log('Stating generation ...');
+  await deletePreviouslyGenerated()
   const opts: GeneratorOpts = {
     generatorProject: createGeneratorProject(),
     destinationProject: createDestinationProject(),
