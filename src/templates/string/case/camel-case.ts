@@ -1,17 +1,6 @@
 import { Snippet } from '../../../snippet/snippet-model';
 
 export const snippetTemplate: Snippet = {
-  variables: [
-    {
-        name: 'ChangeMe',
-        kind: 'camelCase',
-        description: 'ChangeMe',
-      }
-  ],
-  configurations: [{
-    name: 'ChangeMe',
-    value: 'ChangeMe'
-  }],
     path: "string/case/camel-case.ts",
     search: "camel case",
     keywords: [],

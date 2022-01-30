@@ -5,10 +5,13 @@ import {
   SyntaxKind,
 } from 'ts-morph';
 import path from 'path';
-import { Snippet } from '../snippet/snippet-model.js';
+import {
+  Snippet,
+  SnippetConfigurationParam,
+  SnippetVar,
+} from '../snippet/snippet-model.js';
 import { readSnippet } from './copier.js';
 import { GeneratorOpts } from '../generator-model.js';
-import { setConstantValue } from '@ts-morph/common/lib/typescript';
 
 const srcDir = './src/';
 const destTemplateDir = '../src/templates/';
@@ -52,6 +55,28 @@ const setProperty = (
   });
 };
 
+const setPropertyAsSnippetVarArray = (
+  ole: ObjectLiteralExpression,
+  name: string,
+  value: SnippetVar[]
+) => {
+  ole.addPropertyAssignment({
+    name: name,
+    initializer: JSON.stringify(value),
+  });
+};
+
+const setPropertyAsSnippetConfigurationParamArray = (
+  ole: ObjectLiteralExpression,
+  name: string,
+  value: SnippetConfigurationParam[]
+) => {
+  ole.addPropertyAssignment({
+    name: name,
+    initializer: JSON.stringify(value),
+  });
+};
+
 const hydrateSnippet = async (
   opts: GeneratorOpts,
   snippet: Snippet
@@ -81,7 +106,9 @@ const hydrateSnippet = async (
     'search',
     'description',
     'hydrationKind',
-    'code'
+    'code',
+    'variables',
+    'configurations',
   ]);
   setProperty(first, 'path', snippet.path);
   setProperty(first, 'search', snippet.search);
@@ -89,6 +116,16 @@ const hydrateSnippet = async (
   setProperty(first, 'description', snippet.description);
   setProperty(first, 'hydrationKind', snippet.hydrationKind);
   setProperty(first, 'code', snippetContent);
+  if (snippet.variables) {
+    setPropertyAsSnippetVarArray(first, 'variables', snippet.variables);
+  }
+  if (snippet.configurations) {
+    setPropertyAsSnippetConfigurationParamArray(
+      first,
+      'configurations',
+      snippet.configurations
+    );
+  }
   await destSourceFile.save();
   return code;
 };
