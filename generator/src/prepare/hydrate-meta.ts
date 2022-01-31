@@ -93,7 +93,6 @@ const hydrateSnippet = async (
   );
   setProperty(first, 'path', snippet.path);
   setProperty(first, 'search', snippet.search);
-  setProperty(first, 'keywords', snippet.keywords);
   setProperty(first, 'description', snippet.description);
   setProperty(first, 'hydrationKind', snippet.hydrationKind);
   setProperty(first, 'code', snippetContent);

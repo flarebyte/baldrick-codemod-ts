@@ -27,7 +27,6 @@ export interface Snippet {
   search: string;
   description: string;
   path: string;
-  keywords: string[];
   variables?: SnippetVar[];
   configurations?: SnippetConfigurationParam[];
   code?: string;
