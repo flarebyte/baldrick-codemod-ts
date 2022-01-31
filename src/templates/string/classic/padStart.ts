@@ -7,4 +7,4 @@ export const snippetTemplate: Snippet = {
     description: "Pad the current string with another string",
     hydrationKind: "noTransform",
     code: "const padStart =\n  (maxLength: number, fillString?: string) =>\n  (text: string): string =>\n    text.padStart(maxLength, fillString);\n"
-};
+}

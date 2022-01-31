@@ -1,9 +1,4 @@
-import {
-  ObjectLiteralExpression,
-  Project,
-  SourceFile,
-  SyntaxKind,
-} from 'ts-morph';
+import { ObjectLiteralExpression, Project, SyntaxKind } from 'ts-morph';
 import path from 'path';
 import {
   Snippet,
@@ -13,7 +8,6 @@ import {
 import { readSnippet } from './copier.js';
 import { GeneratorOpts } from '../generator-model.js';
 
-const srcDir = './src/';
 const destTemplateDir = '../src/templates/';
 
 export const createGeneratorProject = (): Project =>
@@ -26,19 +20,16 @@ export const createDestinationProject = (): Project =>
     tsConfigFilePath: '../tsconfig.json',
   });
 
-const getMetaTemplateSource = (opts: GeneratorOpts): SourceFile => {
-  const filename = path.join(srcDir, 'snippet/meta-template.ts');
-  const source = opts.generatorProject.getSourceFileOrThrow(filename);
-  return source;
-};
-
 const guessSnippetImport = (snippet: Snippet): string => {
   const levels = snippet.path.split('/').length;
   const prefix = '../'.repeat(levels);
   return `${prefix}snippet/snippet-model`;
 };
 
-const removeProperties = (ole: ObjectLiteralExpression, names: string[]) => {
+export const removeProperties = (
+  ole: ObjectLiteralExpression,
+  names: string[]
+) => {
   names.forEach((name) => {
     ole.getPropertyOrThrow(name).remove();
   });
@@ -82,35 +73,24 @@ const hydrateSnippet = async (
   snippet: Snippet
 ): Promise<string> => {
   console.log(`Processing snippet: ${snippet.path} ...`);
-  const template = getMetaTemplateSource(opts);
   const snippetContent = await readSnippet(snippet);
-  const code = template.getText();
   const newImportPath = guessSnippetImport(snippet);
+  const code = [
+    `import { Snippet } from '${newImportPath}';`,
+    '',
+    'export const snippetTemplate: Snippet = {',
+    '}',
+  ].join('\n');
   const destFilename = path.join(destTemplateDir, snippet.path);
   const destSourceFile = opts.destinationProject.createSourceFile(
     destFilename,
     code
   );
-  const importDeclSnippetModel = destSourceFile.getImportDeclarationOrThrow(
-    (importDecl) => importDecl.getText().includes('snippet')
-  );
-  importDeclSnippetModel.setModuleSpecifier(newImportPath);
   const snippetTemplateDecl =
     destSourceFile.getVariableDeclarationOrThrow('snippetTemplate');
-  console.log('-'.repeat(10));
   const first = snippetTemplateDecl.getFirstChildByKindOrThrow(
     SyntaxKind.ObjectLiteralExpression
   );
-  removeProperties(first, [
-    'path',
-    'keywords',
-    'search',
-    'description',
-    'hydrationKind',
-    'code',
-    'variables',
-    'configurations',
-  ]);
   setProperty(first, 'path', snippet.path);
   setProperty(first, 'search', snippet.search);
   setProperty(first, 'keywords', snippet.keywords);
