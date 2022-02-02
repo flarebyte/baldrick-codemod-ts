@@ -1,6 +1,8 @@
 import prompts from 'prompts';
+import { Project } from 'ts-morph';
 import { Snippet } from './snippet/snippet-model.js';
 import { searchableSnippets } from './snippet/search-meta.js';
+import { listSourceFiles } from './morphing.js';
 
 export const searchSnippets = async () => {
   const response = await prompts({
@@ -47,4 +49,16 @@ export const promptVariables = async (snippet: Snippet): Promise<Snippet> => {
   console.log('augmentedSnippet', augmentedSnippet);
 
   return augmentedSnippet;
+};
+
+export const promptFilename = async (project: Project): Promise<string> => {
+  listSourceFiles(project);
+  const response = await prompts({
+    type: 'autocomplete',
+    name: 'value',
+    message: 'Select the destination file',
+    choices: listSourceFiles(project).map((s) => ({ title: s })),
+  });
+
+  return response.value;
 };

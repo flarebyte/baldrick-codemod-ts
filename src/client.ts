@@ -1,4 +1,9 @@
-import { promptVariables, searchSnippets } from './prompting.js';
+import { createLocalProject } from './morphing.js';
+import {
+  promptFilename,
+  promptVariables,
+  searchSnippets,
+} from './prompting.js';
 import { importSnippet, runSnippet } from './snippet/hydrate.js';
 import { SnippetHydrationOpts } from './snippet/snippet-model.js';
 
@@ -11,8 +16,11 @@ export async function runClient() {
     if (!pickedSnippet) {
       throw new Error('Could not pick the snippet');
     }
+    const project = createLocalProject();
     const codeSnippet = await importSnippet(pickedSnippet);
     const augmentedSnippet = await promptVariables(codeSnippet);
+    const destfilename = await promptFilename(project);
+    console.log('filename', destfilename);
     const opts: SnippetHydrationOpts = {
       code: codeSnippet.code || '',
       variables: augmentedSnippet.variables,
