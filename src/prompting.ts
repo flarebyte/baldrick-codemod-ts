@@ -1,12 +1,50 @@
 import prompts from 'prompts';
+import { Snippet } from './snippet/snippet-model.js';
+import { searchableSnippets } from './snippet/search-meta.js';
 
-export const howAreYou = async () => {
+export const searchSnippets = async () => {
   const response = await prompts({
-    type: 'number',
+    type: 'autocomplete',
     name: 'value',
-    message: 'How old are you?',
-    validate: (value: number) => (value < 18 ? `Nightclub is 18+ only` : true),
+    message: 'Search the snippet',
+    choices: searchableSnippets.map((s) => ({ title: s.search })),
   });
 
-  console.log(response);
+  const foundSnippet = searchableSnippets.find(
+    (s) => s.search === response.value
+  );
+  return foundSnippet;
+};
+
+export const promptVariables = async (snippet: Snippet): Promise<Snippet> => {
+  if (!snippet.variables) {
+    return snippet;
+  }
+
+  const questions: prompts.PromptObject[] = snippet.variables.map(
+    (variable) => ({
+      type: 'text',
+      name: variable.name,
+      message: variable.description,
+      choices: variable.choices
+        ? variable.choices.map((s) => ({ title: s }))
+        : undefined,
+    })
+  );
+
+  const response = await prompts(questions);
+
+  console.log('response', response);
+  const values = snippet.variables.map((v) => ({
+    ...v,
+    value: response[v.name],
+  }));
+
+  const augmentedSnippet: Snippet = {
+    ...snippet,
+    variables: values,
+  };
+  console.log('augmentedSnippet', augmentedSnippet);
+
+  return augmentedSnippet;
 };

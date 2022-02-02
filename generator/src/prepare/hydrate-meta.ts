@@ -1,14 +1,17 @@
 import { ObjectLiteralExpression, Project, SyntaxKind } from 'ts-morph';
 import path from 'path';
 import {
+  SearchableSnippet,
   Snippet,
   SnippetConfigurationParam,
   SnippetVar,
 } from '../snippet/snippet-model.js';
 import { readSnippet } from './copier.js';
 import { GeneratorOpts } from '../generator-model.js';
+import { snippets } from '../snippet/meta.js';
 
 const destTemplateDir = '../src/templates/';
+const destSnippetDir = '../src/snippet/';
 
 export const createGeneratorProject = (): Project =>
   new Project({
@@ -23,7 +26,7 @@ export const createDestinationProject = (): Project =>
 const guessSnippetImport = (snippet: Snippet): string => {
   const levels = snippet.path.split('/').length;
   const prefix = '../'.repeat(levels);
-  return `${prefix}snippet/snippet-model`;
+  return `${prefix}snippet/snippet-model.js`;
 };
 
 export const removeProperties = (
@@ -115,4 +118,22 @@ export const hydrateSnippets = async (opts: GeneratorOpts): Promise<void> => {
     hydrateSnippet(opts, snippet)
   );
   await Promise.all(snippetPromises);
+};
+
+export const hydrateMeta = async (opts: GeneratorOpts): Promise<void> => {
+  const searchableSnippets: SearchableSnippet[] = snippets.map((s) => ({
+    search: s.search,
+    description: s.description,
+    path: s.path,
+  }));
+  const code = [
+    `import { SearchableSnippet } from './snippet-model.js'`,
+    'export const searchableSnippets: SearchableSnippet[] = ',
+    JSON.stringify(searchableSnippets, null, 2),
+  ].join('\n');
+  const destSourceFile = opts.destinationProject.createSourceFile(
+    path.join(destSnippetDir, 'search-meta.ts'),
+    code
+  );
+  await destSourceFile.save()
 };

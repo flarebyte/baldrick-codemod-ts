@@ -32,3 +32,9 @@ export interface Snippet {
   code?: string;
   hydrationKind: HydrationKind;
 }
+
+export type SearchableSnippet = Pick<
+  Snippet,
+  'search' | 'description' | 'path'
+>;
+

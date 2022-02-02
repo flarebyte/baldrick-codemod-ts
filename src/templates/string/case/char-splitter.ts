@@ -1,4 +1,4 @@
-import { Snippet } from '../../../snippet/snippet-model';
+import { Snippet } from '../../../snippet/snippet-model.js';
 
 export const snippetTemplate: Snippet = {
     path: "string/case/char-splitter.ts",
