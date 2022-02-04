@@ -1,4 +1,5 @@
 import prompts from 'prompts';
+import path from 'path';
 import { Project } from 'ts-morph';
 import { Snippet } from './snippet/snippet-model.js';
 import { searchableSnippets } from './snippet/search-meta.js';
@@ -51,13 +52,23 @@ export const promptVariables = async (snippet: Snippet): Promise<Snippet> => {
   return augmentedSnippet;
 };
 
+const customFileSuggest = (input: string, choices: prompts.Choice[]) =>
+  Promise.resolve(
+    choices.filter((i) => i.title.toLowerCase().includes(input.toLowerCase()))
+  );
+
 export const promptFilename = async (project: Project): Promise<string> => {
+  const currentDir = process.cwd();
   listSourceFiles(project);
   const response = await prompts({
     type: 'autocomplete',
     name: 'value',
     message: 'Select the destination file',
-    choices: listSourceFiles(project).map((s) => ({ title: s })),
+    suggest: customFileSuggest,
+    choices: listSourceFiles(project).map((s) => ({
+      title: path.relative(currentDir, s),
+      value: s,
+    })),
   });
 
   return response.value;
