@@ -61,6 +61,7 @@
     "norm:g": "baldrick-ts generate -f cli -ga 'flarebyte' -ch 'Flarebyte.com' -cy 2022 -l MIT && yarn md:fix"
   },
   "dependencies": {
+    "fs-jetpack": "^4.3.1",
     "prompts": "^2.4.2",
     "ts-morph": "^13.0.3"
   },

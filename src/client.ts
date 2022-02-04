@@ -1,3 +1,4 @@
+import { appendSnippetToSourceFile } from './filing.js';
 import { createLocalProject } from './morphing.js';
 import {
   promptFilename,
@@ -20,14 +21,13 @@ export async function runClient() {
     const codeSnippet = await importSnippet(pickedSnippet);
     const augmentedSnippet = await promptVariables(codeSnippet);
     const destfilename = await promptFilename(project);
-    console.log('filename', destfilename);
     const opts: SnippetHydrationOpts = {
       code: codeSnippet.code || '',
       variables: augmentedSnippet.variables,
       configurations: augmentedSnippet.configurations,
     };
     const generated = runSnippet(codeSnippet.hydrationKind, opts);
-    console.log(generated);
+    await appendSnippetToSourceFile(destfilename, generated)
   } catch (error) {
     console.log('baldrick-codemod-ts generator will exit with error code 1');
     console.error(error);
