@@ -1,4 +1,4 @@
-import { isString } from './is-primitive';
+import { isString } from './is-string';
 
 describe('is-string', () => {
   it('should detect a string in a list', () => {
