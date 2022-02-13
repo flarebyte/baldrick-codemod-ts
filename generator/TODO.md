@@ -6,11 +6,10 @@
 * [x] padLeft
 * [x] padRight
 * [x] reverse
-* [ ] slugify
+* [x] slugify
 * [ ] wordWrap
-* [ ] snakeCase
-* [ ] titleCase
-* [ ] kebabCase
+* [x] snakeCase
+* [x] titleCase
 * [x] replaceAll
 * [ ] countWords
 
@@ -19,20 +18,15 @@
 
 * [x] byStringEqual
 * [x] byStringStartWith
-* [ ] byUnique ...
+* [x] byUnique ...
 * [x] version
 
 ## Sorting
 
-* [ ] sortByField
-* [ ] sortDesc
-* [ ] compareByField
-* [ ] compareBy
-
-## Conversion
-
-* [ ] convertToString
-* [ ] convertToBoolean
+* [x] sortByField
+* [x] sortDesc
+* [x] compareByField
+* [x] compareBy
 
 ## Collection
 
@@ -53,9 +47,8 @@
 * [ ] get specific environment (or default/null/exception)
 
 ## Guards and is...
-* [ ] convert string to narrow string (or default/null/exception). Also convert array of strings
-* [ ] all basic isA ...
-* [ ] isBlank
+* [x] all basic isA ...
+* [x] isBlank
 * [ ] isEmptyArray
 
 ## IO
