@@ -1,12 +1,10 @@
 /**
- * Replace all the search values by a replacement
- * @param text the text on which to apply the replacements
+ * Partial application that takes a search and a replacement value
+ * and will apply these to a given text
  * @param search the search value
  * @param replaceValue the replacement value
- * @returns the text with the replacements
  */
-export const replaceAll = (
-  text: string,
-  search: string,
-  replaceValue: string
-): string => text.split(search).join(replaceValue);
+export const replaceAll =
+  (search: string, replaceValue: string) =>
+  (text: string): string =>
+    text.split(search).join(replaceValue);
