@@ -28,7 +28,6 @@ const compareNumber = (a: number, b: number): -1 | 0 | 1 => {
  * Note: if we need more advanced support, we should consider a library
  * @param v1 the first version to compare
  * @param v2 the second version to compare
- * @returns 0 if same, 1 if v1 > 2, -1 if v1 < 2
  */
 export const compareVersion = (v1: string, v2: string): -1 | 0 | 1 => {
   const [major1, minor1, patch1] = parseVersion(v1);
