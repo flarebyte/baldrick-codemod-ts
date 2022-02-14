@@ -1,5 +1,5 @@
 import { ObjectLiteralExpression, Project, SyntaxKind } from 'ts-morph';
-import path from 'path';
+import path from 'node:path';
 import {
   SearchableSnippet,
   Snippet,
@@ -33,9 +33,9 @@ export const removeProperties = (
   ole: ObjectLiteralExpression,
   names: string[]
 ) => {
-  names.forEach((name) => {
+  for (const name of names) {
     ole.getPropertyOrThrow(name).remove();
-  });
+  }
 };
 
 const setProperty = (
@@ -135,5 +135,5 @@ export const hydrateMeta = async (opts: GeneratorOpts): Promise<void> => {
     path.join(destSnippetDir, 'search-meta.ts'),
     code
   );
-  await destSourceFile.save()
+  await destSourceFile.save();
 };

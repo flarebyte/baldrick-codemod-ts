@@ -1,5 +1,5 @@
 const parseVersion = (version: string): [number, number, number] => {
-  const parts = version.split('.').map((n) => parseInt(n, 10));
+  const parts = version.split('.').map((n) => Number.parseInt(n, 10));
   if (parts.length !== 3) {
     throw new Error(`Version is expected to have 3 parts not ${parts.length}`);
   }
@@ -8,7 +8,7 @@ const parseVersion = (version: string): [number, number, number] => {
     throw new Error('Major, minor and patch cannot be undefined');
   }
   if (isNaN(major) || isNaN(minor) || isNaN(patch)) {
-    throw new Error('Major, minor and patch should be numbers');
+    throw new TypeError('Major, minor and patch should be numbers');
   }
   return [major, minor, patch];
 };

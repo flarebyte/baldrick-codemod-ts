@@ -17,9 +17,9 @@ describe('is-in-range', () => {
       true,
       null,
       undefined,
-      NaN,
-      Infinity,
-      -Infinity,
+      Number.NaN,
+      Number.POSITIVE_INFINITY,
+      Number.NEGATIVE_INFINITY,
     ];
     const actual: number[] = values.filter(isInRange(1, 3));
     expect(actual).toStrictEqual([1, 2, 1.2]);

@@ -5,7 +5,8 @@ const capitalizeWord = (text: string): string =>
  * Partial application of a splitter function, that can be used before
  * converting a string to [title case](https://en.wikipedia.org/wiki/Title_case)
  * @example TitleCase
- * @param splitter the function that splits the string into an array of strings
+ * @alias PascalCase
+ * @param splitter a function that splits the string into words
  */
 export const titleCase =
   (splitter: (textToSplit: string) => string[]) => (text: string) =>

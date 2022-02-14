@@ -6,5 +6,5 @@ export const betweenString =
     if (startIdx < 0 || endIdx < 0 || startIdx >= endIdx) {
       return defaultValue;
     }
-    return text.slice(startIdx+1, endIdx);
+    return text.slice(startIdx + 1, endIdx);
   };

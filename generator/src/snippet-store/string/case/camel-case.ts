@@ -8,8 +8,7 @@ const wordToCamel = (text: string, index: number): string =>
  * Partial application of a splitter function, that can be used before
  * converting a string to [camel case](https://en.wikipedia.org/wiki/Camel_case)
  * @example camelCase
- * @param splitter the function that splits the string into an array of strings
- * @returns a function that takes a string and returns a camel case string
+ * @param splitter a function that splits the string into words
  */
 export const camelCase =
   (splitter: (textToSplit: string) => string[]) => (text: string) =>

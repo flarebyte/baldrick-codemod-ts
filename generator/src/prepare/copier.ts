@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'node:path';
 import jetpack from 'fs-jetpack';
 import { Snippet } from '../snippet/snippet-model';
 
@@ -14,13 +14,18 @@ export const readSnippet = async (snippet: Snippet): Promise<string> => {
 };
 
 export const deletePreviouslyGenerated = async () => {
-  console.log('Deleting previously generated template folder')
-  await jetpack.removeAsync(destTemplateDir)
-  await jetpack.removeAsync(destSnippetDir)
-}
+  console.log('Deleting previously generated template folder');
+  await jetpack.removeAsync(destTemplateDir);
+  await jetpack.removeAsync(destSnippetDir);
+};
 
-export const copyCommon = async() => {
-  await jetpack.copyAsync('./src/snippet/snippet-model.ts', '../src/snippet/snippet-model.ts')
-  await jetpack.copyAsync('./src/snippet/hydrate.ts', '../src/snippet/hydrate.ts')
-
-}
+export const copyCommon = async () => {
+  await jetpack.copyAsync(
+    './src/snippet/snippet-model.ts',
+    '../src/snippet/snippet-model.ts'
+  );
+  await jetpack.copyAsync(
+    './src/snippet/hydrate.ts',
+    '../src/snippet/hydrate.ts'
+  );
+};

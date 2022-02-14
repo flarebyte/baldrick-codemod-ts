@@ -19,7 +19,7 @@ const generate = async () => {
     snippets,
   };
   await hydrateSnippets(opts);
-  await hydrateMeta(opts)
+  await hydrateMeta(opts);
 };
 
 await generate();

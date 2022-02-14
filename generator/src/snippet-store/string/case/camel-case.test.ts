@@ -7,6 +7,8 @@ describe('camel-case', () => {
   const cases: [string, string][] = [
     ['', ''],
     ['simple', 'simple'],
+    ['two words', 'twoWords'],
+    ['Two Words', 'twoWords'],
   ];
   it.each(cases)('should convert "%s" to "%s"', (given, expected) => {
     expect(simpleCamelCase(given)).toStrictEqual(expected);

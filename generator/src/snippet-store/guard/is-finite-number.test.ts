@@ -15,9 +15,9 @@ describe('is-finite-number', () => {
       true,
       null,
       undefined,
-      NaN,
-      Infinity,
-      -Infinity,
+      Number.NaN,
+      Number.POSITIVE_INFINITY,
+      Number.NEGATIVE_INFINITY,
     ];
     const actual: number[] = values.filter(isFiniteNumber);
     expect(actual).toStrictEqual([1, 1000, 0, -5, 1.2, -3.14]);

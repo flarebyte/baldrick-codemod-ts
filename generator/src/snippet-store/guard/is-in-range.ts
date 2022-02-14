@@ -1,5 +1,5 @@
 /**
- * Checks if n is between start and up to, but not including, end. 
+ * Checks if n is between start and up to, but not including, end.
  */
 export const isInRange =
   (min: number, max: number) =>

@@ -7,11 +7,19 @@ describe('between-string', () => {
   });
 
   it('should only capture the first string', () => {
-    const actual = betweenString('(', ')', '')('[](http://website.com)(http://website2.com) more after');
+    const actual = betweenString(
+      '(',
+      ')',
+      ''
+    )('[](http://website.com)(http://website2.com) more after');
     expect(actual).toStrictEqual('http://website.com');
   });
   it('should not be confused with nested block', () => {
-    const actual = betweenString('(', ')', '')('[]((http://website.com) more after');
+    const actual = betweenString(
+      '(',
+      ')',
+      ''
+    )('[]((http://website.com) more after');
     expect(actual).toStrictEqual('(http://website.com');
   });
 

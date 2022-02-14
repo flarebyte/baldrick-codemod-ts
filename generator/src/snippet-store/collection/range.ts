@@ -1,1 +1,1 @@
-export const range = (n: number) => Array.from(Array(n).keys());
+export const range = (n: number) => [...new Array(n).keys()];

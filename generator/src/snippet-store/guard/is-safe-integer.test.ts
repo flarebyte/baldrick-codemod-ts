@@ -15,9 +15,9 @@ describe('is-positive', () => {
       true,
       null,
       undefined,
-      NaN,
-      Infinity,
-      -Infinity
+      Number.NaN,
+      Number.POSITIVE_INFINITY,
+      Number.NEGATIVE_INFINITY,
     ];
     const actual: number[] = values.filter(isSafeInteger);
     expect(actual).toStrictEqual([1, 1000, 0, -5]);

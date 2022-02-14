@@ -4,6 +4,6 @@
  * @param defaultValue the default value
  * @returns the first value
  */
-export function first<T>(items: T[], defaultValue: T): T  {
-    return items[0] || defaultValue;
+export function first<T>(items: T[], defaultValue: T): T {
+  return items[0] || defaultValue;
 }

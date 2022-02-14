@@ -1,6 +1,8 @@
 export type SnippetVarKind = 'string' | 'choice' | 'camelCase' | 'TitleCase';
-export type HydrationKind = 'noTransform'| 'replaceVariables' | 'replaceWithLindenmayer'
-
+export type HydrationKind =
+  | 'noTransform'
+  | 'replaceVariables'
+  | 'replaceWithLindenmayer';
 
 export interface SnippetVar {
   name: string;
@@ -37,4 +39,3 @@ export type SearchableSnippet = Pick<
   Snippet,
   'search' | 'description' | 'path'
 >;
-
