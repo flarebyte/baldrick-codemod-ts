@@ -1,4 +1,5 @@
 import { isString } from './is-string';
+/* eslint-disable unicorn/no-null*/
 
 describe('is-string', () => {
   it('should detect a string in a list', () => {

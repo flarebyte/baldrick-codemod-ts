@@ -8,4 +8,4 @@
  * @returns the characters in reverse
  */
 export const reverseString = (text: string): string =>
-  text.split('').reverse().join('');
+  [...text].reverse().join('');

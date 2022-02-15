@@ -129,7 +129,7 @@ export const hydrateMeta = async (opts: GeneratorOpts): Promise<void> => {
   const code = [
     `import { SearchableSnippet } from './snippet-model.js'`,
     'export const searchableSnippets: SearchableSnippet[] = ',
-    JSON.stringify(searchableSnippets, null, 2),
+    JSON.stringify(searchableSnippets, undefined, 2),
   ].join('\n');
   const destSourceFile = opts.destinationProject.createSourceFile(
     path.join(destSnippetDir, 'search-meta.ts'),

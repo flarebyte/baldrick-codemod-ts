@@ -1,4 +1,5 @@
 import { isSafeInteger } from './is-safe-integer';
+/* eslint-disable unicorn/no-null*/
 
 describe('is-positive', () => {
   it('should extract integer values', () => {

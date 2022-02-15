@@ -1,4 +1,5 @@
 import { isInRange } from './is-in-range';
+/* eslint-disable unicorn/no-null*/
 
 describe('is-in-range', () => {
   it('should extract values in range', () => {

@@ -1,4 +1,5 @@
 import { isPositive } from './is-positive';
+/* eslint-disable unicorn/no-null*/
 
 describe('is-positive', () => {
   it('should extract positive values', () => {

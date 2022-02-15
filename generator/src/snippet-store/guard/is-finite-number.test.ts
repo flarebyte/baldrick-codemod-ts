@@ -1,4 +1,5 @@
 import { isFiniteNumber } from './is-finite-number';
+/* eslint-disable unicorn/no-null*/
 
 describe('is-finite-number', () => {
   it('should extract finite values', () => {

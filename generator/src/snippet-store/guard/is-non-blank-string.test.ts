@@ -1,4 +1,5 @@
 import { isNonBlankString } from './is-non-blank-string';
+/* eslint-disable unicorn/no-null*/
 
 describe('is-non-blank-string', () => {
   it('should detect a non-blank string in a list', () => {

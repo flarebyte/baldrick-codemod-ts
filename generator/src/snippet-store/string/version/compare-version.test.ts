@@ -15,7 +15,7 @@ describe('compare-version', () => {
       const revActual = compareVersion(v2, v1);
       expect(actual).toStrictEqual(expected);
       if (expected !== 0) {
-        expect(revActual).toStrictEqual(-1 * expected);
+        expect(revActual).toStrictEqual(-1 * expected); // eslint-disable-line jest/no-conditional-expect
       }
     }
   );
@@ -23,14 +23,14 @@ describe('compare-version', () => {
     expect(() =>
       compareVersion('1.0.1.4.5', '1.2.3')
     ).toThrowErrorMatchingInlineSnapshot(
-      `"Version is expected to have 3 parts not 5"`
+      `"Version is expected to have the format 0.0.0 not 1.0.1.4.5"`
     );
   });
   it('should fail if the version contains non-numeric chars', () => {
     expect(() =>
       compareVersion('1.a.3', '1.2.3')
     ).toThrowErrorMatchingInlineSnapshot(
-      `"Major, minor and patch should be numbers"`
+      `"Version is expected to have the format 0.0.0 not 1.a.3"`
     );
   });
 });

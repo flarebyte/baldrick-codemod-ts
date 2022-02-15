@@ -1,16 +1,22 @@
+const isVersionPart = (value: unknown): value is number =>
+  typeof value === 'number' && Number.isSafeInteger(value);
+
+const isTupleOfThreeNumber = (
+  value: unknown
+): value is [number, number, number] => (value as number[]).length === 3;
+
 const parseVersion = (version: string): [number, number, number] => {
-  const parts = version.split('.').map((n) => Number.parseInt(n, 10));
-  if (parts.length !== 3) {
-    throw new Error(`Version is expected to have 3 parts not ${parts.length}`);
+  const parts = version
+    .split('.')
+    .map((n) => Number.parseInt(n, 10))
+    .filter(isVersionPart);
+  if (isTupleOfThreeNumber(parts)) {
+    return parts;
+  } else {
+    throw new Error(
+      `Version is expected to have the format 0.0.0 not ${version}`
+    );
   }
-  const [major, minor, patch] = parts;
-  if (major === undefined || minor === undefined || patch === undefined) {
-    throw new Error('Major, minor and patch cannot be undefined');
-  }
-  if (isNaN(major) || isNaN(minor) || isNaN(patch)) {
-    throw new TypeError('Major, minor and patch should be numbers');
-  }
-  return [major, minor, patch];
 };
 
 const compareNumber = (a: number, b: number): -1 | 0 | 1 => {

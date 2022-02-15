@@ -1,4 +1,5 @@
 import { isPositiveOrZero } from './is-positive-or-zero';
+/* eslint-disable unicorn/no-null*/
 
 describe('is-positive-or-zero', () => {
   it('should extract positive or zero values', () => {
