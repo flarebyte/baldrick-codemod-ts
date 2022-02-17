@@ -1,15 +1,21 @@
 import prompts from 'prompts';
-import path from 'path';
+import path from 'node:path';
 import { Project } from 'ts-morph';
 import { Snippet } from './snippet/snippet-model.js';
 import { searchableSnippets } from './snippet/search-meta.js';
 import { listSourceFiles } from './morphing.js';
+
+const customSnippetSearch = (input: string, choices: prompts.Choice[]) =>
+  Promise.resolve(
+    choices.filter((i) => i.title.toLowerCase().includes(input.toLowerCase()))
+  );
 
 export const searchSnippets = async () => {
   const response = await prompts({
     type: 'autocomplete',
     name: 'value',
     message: 'Search the snippet',
+    suggest: customSnippetSearch,
     choices: searchableSnippets.map((s) => ({ title: s.search })),
   });
 
@@ -47,7 +53,6 @@ export const promptVariables = async (snippet: Snippet): Promise<Snippet> => {
     ...snippet,
     variables: values,
   };
-  console.log('augmentedSnippet', augmentedSnippet);
 
   return augmentedSnippet;
 };

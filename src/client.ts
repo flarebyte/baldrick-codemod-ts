@@ -7,6 +7,7 @@ import {
 } from './prompting.js';
 import { importSnippet, runSnippet } from './snippet/hydrate.js';
 import { SnippetHydrationOpts } from './snippet/snippet-model.js';
+import { version } from './version.js';
 
 /**
  * This function may be merged in the future when the linter does a better job at recognizing .mts files
@@ -22,12 +23,16 @@ export async function runClient() {
     const augmentedSnippet = await promptVariables(codeSnippet);
     const destfilename = await promptFilename(project);
     const opts: SnippetHydrationOpts = {
-      code: codeSnippet.code || '',
+      code: codeSnippet.code || [],
       variables: augmentedSnippet.variables,
       configurations: augmentedSnippet.configurations,
     };
     const generated = runSnippet(codeSnippet.hydrationKind, opts);
-    await appendSnippetToSourceFile(destfilename, generated)
+    console.log('-'.repeat(30));
+    console.log(generated);
+    console.log('-'.repeat(30));
+    await appendSnippetToSourceFile(destfilename, generated);
+    console.log(`✓ Done. Version ${version}. See ${destfilename}`);
   } catch (error) {
     console.log('baldrick-codemod-ts generator will exit with error code 1');
     console.error(error);

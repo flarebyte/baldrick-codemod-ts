@@ -36,7 +36,7 @@ const exampleReplaceWithVars: [
     noTransform,
     {
       variables: [],
-      code: 'same code',
+      code: ['same code'],
     },
     'same code',
   ],
@@ -48,7 +48,9 @@ const exampleReplaceWithVars: [
         createVar('ThisString', 'Space'),
         createVar('separator', ' '),
       ],
-      code: `splitByThisString = (text: string): string[] => text.split('separator');`,
+      code: [
+        `splitByThisString = (text: string): string[] => text.split('separator');`,
+      ],
     },
     `splitBySpace = (text: string): string[] => text.split(' ');`,
   ],
@@ -61,7 +63,7 @@ const exampleReplaceWithVars: [
         createVar('B', '-CC-'),
         createVar('C', '-DD-'),
       ],
-      code: `A`,
+      code: [`A`],
     },
     `---DD--DD----DD--DD---`,
   ],
@@ -70,7 +72,7 @@ const exampleReplaceWithVars: [
     replaceVariables,
     {
       variables: [createVar('A', '-BB-')],
-      code: `A`,
+      code: [`A`],
     },
     `-BB-`,
   ],
@@ -80,7 +82,7 @@ const exampleReplaceWithVars: [
     {
       configurations: [createConfigParam('limit', '5')],
       variables: [createVar('A', 'AB'), createVar('B', 'A')],
-      code: `A`,
+      code: [`A`],
     },
     `ABAABABAABAAB`,
   ],

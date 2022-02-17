@@ -98,7 +98,7 @@ const hydrateSnippet = async (
   setProperty(first, 'search', snippet.search);
   setProperty(first, 'description', snippet.description);
   setProperty(first, 'hydrationKind', snippet.hydrationKind);
-  setProperty(first, 'code', snippetContent);
+  setProperty(first, 'code', snippetContent.split('\n'));
   if (snippet.variables) {
     setPropertyAsSnippetVarArray(first, 'variables', snippet.variables);
   }

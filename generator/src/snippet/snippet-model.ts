@@ -1,4 +1,4 @@
-export type SnippetVarKind = 'string' | 'choice' | 'camelCase' | 'TitleCase';
+export type SnippetVarKind = 'string' | 'choice' | 'TitleCase';
 export type HydrationKind =
   | 'noTransform'
   | 'replaceVariables'
@@ -18,7 +18,7 @@ export interface SnippetConfigurationParam {
 }
 
 export interface SnippetHydrationOpts {
-  code: string;
+  code: string[];
   configurations?: SnippetConfigurationParam[];
   variables?: SnippetVar[];
 }
@@ -31,7 +31,7 @@ export interface Snippet {
   path: string;
   variables?: SnippetVar[];
   configurations?: SnippetConfigurationParam[];
-  code?: string;
+  code?: string[];
   hydrationKind: HydrationKind;
 }
 

@@ -1,6 +1,8 @@
-export type SnippetVarKind = 'string' | 'choice' | 'camelCase' | 'TitleCase';
-export type HydrationKind = 'noTransform'| 'replaceVariables' | 'replaceWithLindenmayer'
-
+export type SnippetVarKind = 'string' | 'choice' | 'TitleCase';
+export type HydrationKind =
+  | 'noTransform'
+  | 'replaceVariables'
+  | 'replaceWithLindenmayer';
 
 export interface SnippetVar {
   name: string;
@@ -16,7 +18,7 @@ export interface SnippetConfigurationParam {
 }
 
 export interface SnippetHydrationOpts {
-  code: string;
+  code: string[];
   configurations?: SnippetConfigurationParam[];
   variables?: SnippetVar[];
 }
@@ -29,7 +31,7 @@ export interface Snippet {
   path: string;
   variables?: SnippetVar[];
   configurations?: SnippetConfigurationParam[];
-  code?: string;
+  code?: string[];
   hydrationKind: HydrationKind;
 }
 
@@ -37,4 +39,3 @@ export type SearchableSnippet = Pick<
   Snippet,
   'search' | 'description' | 'path'
 >;
-

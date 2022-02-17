@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'node:path';
 import {
   Hydrate,
   HydrationKind,
@@ -9,7 +9,8 @@ import {
   SnippetVar,
 } from './snippet-model.js';
 
-export const noTransform = (opts: SnippetHydrationOpts): string => opts.code;
+export const noTransform = (opts: SnippetHydrationOpts): string =>
+  opts.code.join('\n');
 
 const specialChars = [
   '▀',
@@ -34,19 +35,38 @@ const replaceAll = (
   replaceValue: string
 ): string => text.split(search).join(replaceValue);
 
+const upperFirstChar = (text: string): string =>
+  text.length > 0 ? text[0]?.toUpperCase() + text.slice(1).trimEnd() : '';
+
+const lowerFirstChar = (text: string): string =>
+  text.length > 0 ? text[0]?.toLowerCase() + text.slice(1).trimEnd() : '';
+
 export const replaceVariables = (opts: SnippetHydrationOpts): string => {
-  let content = opts.code;
+  let content = opts.code.join('\n');
   if (!opts.variables) throw new Error('Variables need to be defined');
   for (const variable of opts.variables) {
     if (variable.value) {
-      content = replaceAll(content, variable.name, variable.value);
+      if (variable.kind === 'TitleCase') {
+        content = replaceAll(
+          content,
+          upperFirstChar(variable.name),
+          upperFirstChar(variable.value)
+        );
+        content = replaceAll(
+          content,
+          lowerFirstChar(variable.name),
+          lowerFirstChar(variable.value)
+        );
+      } else {
+        content = replaceAll(content, variable.name, variable.value);
+      }
     }
   }
   return content;
 };
 
 export const replaceVariablesSafer = (opts: SnippetHydrationOpts): string => {
-  let content = opts.code;
+  let content = opts.code.join('\n');
   if (!opts.variables) {
     throw new Error('Variables need to be defined');
   }
@@ -120,7 +140,7 @@ const getVarOrConfigAsInt = (
 };
 
 export const replaceWithLindenmayer = (opts: SnippetHydrationOpts): string => {
-  let content = opts.code;
+  let content = opts.code.join('\n');
   if (!opts.variables) throw new Error('Variables need to be defined');
   if (!opts.configurations)
     throw new Error('Configurations need to be defined');
@@ -131,7 +151,7 @@ export const replaceWithLindenmayer = (opts: SnippetHydrationOpts): string => {
     3
   );
   for (let index = 0; index < limit; index++) {
-    content = replaceVariablesSafer({ ...opts, code: content });
+    content = replaceVariablesSafer({ ...opts, code: content.split('\n') });
   }
   return content;
 };
