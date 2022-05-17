@@ -1,27 +1,24 @@
-
+interface FunctionInfo {
+  name: string;
+  params: [string, string][];
+  returned: string;
+}
 const checkMethodAspect = (line: string) => {
   return (
     line.includes('->') &&
-    line.includes(':')&&
+    line.includes(':') &&
     !line.includes('\\') &&
     !line.includes('::')
   );
-}
+};
 
-const stripStringList = (list: string[]) => list.map( s => s.trim())
+const trimStrings = (list: string[]) => list.map((s) => s.trim());
 
-function replaceArrowWithinParenthesis(text: string) {
-  var inParen, letter, r;
-  r = '';
-  inParen = false;
-
-  for (
-    var letter, _pj_c = 0, _pj_a = text, _pj_b = _pj_a.length;
-    _pj_c < _pj_b;
-    _pj_c += 1
-  ) {
-    letter = _pj_a[_pj_c];
-
+const replaceArrowWithinParenthesis = (text: string) => {
+  let r = '';
+  let inParen = false;
+  const chars = text.split('');
+  for (let letter of chars) {
     if (letter === '(') {
       inParen = true;
     }
@@ -45,29 +42,16 @@ function replaceArrowWithinParenthesis(text: string) {
 }
 
 function parseParams(signature: string) {
-  var noArrow, params;
-  noArrow = replaceArrowWithinParenthesis(signature);
-  params = stripStringList(noArrow.split('->'));
-  return function () {
-    var _pj_a = [],
-      _pj_b = params;
-
-    for (var _pj_c = 0, _pj_d = _pj_b.length; _pj_c < _pj_d; _pj_c += 1) {
-      var a = _pj_b[_pj_c];
-
-      _pj_a.push(a.replace('@', '->'));
-    }
-
-    return _pj_a;
-  }.call(this);
+  const noArrow = replaceArrowWithinParenthesis(signature);
+  const params = trimStrings(noArrow.split('->'));
+  return params.map( param => param.replace('@', '->'))
 }
 
-function parseMethodSignature(lines: string[], line: string) {
-  var methodName, paramNames, paramTypes, params, signParams, signature;
-  [methodName, signature] = line.split(':', 2);
-  signParams = parseParams(signature);
-  paramTypes = signParams.slice(0, -1);
-  paramNames = stripStringList(findParameterNames(methodName)(lines));
+function parseMethodSignature(lines: string[], line: string): FunctionInfo {
+  const [methodName, signature] = line.split(':', 2);
+  const signParams = signature ? parseParams(signature): [];
+  const paramTypes = signParams.slice(0, -1);
+  const paramNames = trimStrings(findParameterNames(methodName)(lines));
   params = zip(paramNames, paramTypes);
   return {
     name: methodName?.trim(),
@@ -88,4 +72,4 @@ const findParameterNames = (methodName: string) => (lines: string[]) => {
   return found ? extractParamName(found, methodName) : [];
 };
 
-export const parseElm = (_content: string) => '';
+export const parseElmFunctions = (_content: string): FunctionInfo[] => [];

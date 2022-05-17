@@ -1,4 +1,4 @@
-import { parseElm } from './parse-elm';
+import { parseElmFunctions } from './parse-elm';
 
 const elmCode = ```
 module Bubblegum.Entity.Attribute exposing
@@ -76,7 +76,7 @@ setKey key model =
 
 describe('parse-elm', () => {
   it('should parse a valid elm code', () => {
-    const actual = parseElm(elmCode);
+    const actual = parseElmFunctions(elmCode);
     expect(actual).toMatchInlineSnapshot();
   });
 });
