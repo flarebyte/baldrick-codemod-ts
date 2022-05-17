@@ -1,6 +1,6 @@
-import { parseElmFunctions } from './parse-elm';
+import { parseElmFunction, parseElmFunctions } from './parse-elm';
 
-const elmCode = ```
+const elmCode = `
 module Bubblegum.Entity.Attribute exposing
     ( Model, setId, setKey, setValues, setFacets
     , findAttributeByKey, findAttributeFirstValueByKey, replaceAttributeByKey, deleteAttributeByKey
@@ -72,9 +72,15 @@ setKey : String -> Model -> Model
 setKey key model =
     { model | key = key }
 
-```
+`
 
 describe('parse-elm', () => {
+  describe('parseElmFunction', () => {
+    it('should parse a valid function', () => {
+      const actual = parseElmFunction('setId : Maybe String -> Model -> Model', 'setId id model =' )
+      expect(actual).toMatchInlineSnapshot()
+    })
+  })
   it('should parse a valid elm code', () => {
     const actual = parseElmFunctions(elmCode);
     expect(actual).toMatchInlineSnapshot();

@@ -72,4 +72,7 @@ const findParameterNames = (methodName: string) => (lines: string[]) => {
   return found ? extractParamName(found, methodName) : [];
 };
 
+export const parseElmFunction = (_signatureLine: string, _parametersLine: string): FunctionInfo | false=> {
+  return false;
+}
 export const parseElmFunctions = (_content: string): FunctionInfo[] => [];
