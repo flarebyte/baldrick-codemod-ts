@@ -3,6 +3,8 @@ interface FunctionInfo {
   params: [string, string][];
   returned: string;
 }
+const isFunctionInfo = (value: unknown): value is FunctionInfo =>
+  typeof value === 'object' && value !== null;
 
 const trimStrings = (list: string[]) => list.map((s) => s.trim());
 const chompLast = (text: string): string => text.trim().slice(0, -1).trim();
@@ -34,11 +36,20 @@ const replaceArrowWithinParenthesis = (text: string) => {
   return r;
 };
 
-const parseParams = (signature: string) => {
-  const noArrow = replaceArrowWithinParenthesis(signature);
-  const params = trimStrings(noArrow.split('->'));
+const parseParams = (signature: string): string[] => {
+  const noArrowWithinParenthesis = replaceArrowWithinParenthesis(signature);
+  const params = trimStrings(noArrowWithinParenthesis.split('->'));
   return params.map((param) => param.replace('@', '->'));
 };
+
+const extractName = (line: string) => {
+  const maybeName = line.split(':')[0]?.trim() || false;
+  const name = maybeName && /(\w)+/.test(maybeName) ? maybeName : false;
+  return name;
+};
+
+const matchName = (name: string, line: string): boolean =>
+  line.trim().endsWith('=') && line.trim().startsWith(name);
 
 const findElmFunctionBlocks = (content: string): [string, string][] => {
   const lines = content.split('\n');
@@ -46,18 +57,13 @@ const findElmFunctionBlocks = (content: string): [string, string][] => {
   let name: string | false = false;
   const results: [string, string][] = [];
   for (const line of lines) {
-    if (line.includes(':') && line.includes('->')) {
-      const maybeName = line.split(':')[0]?.trim() || false;
-      name = maybeName && /(\w)+/.test(maybeName) ? maybeName : false;
+    const isPerhapsFunction = line.includes(':') && line.includes('->');
+    if (isPerhapsFunction) {
+      name = extractName(line);
       if (name) {
         firstLine = line;
       }
-    } else if (
-      name &&
-      firstLine &&
-      line.trim().endsWith('=') &&
-      line.trim().startsWith(name)
-    ) {
+    } else if (name && firstLine && matchName(name, line)) {
       results.push([firstLine, line]);
       name = false;
       firstLine = false;
@@ -69,6 +75,10 @@ const findElmFunctionBlocks = (content: string): [string, string][] => {
   return results;
 };
 
+/**
+ * Parse am elm function
+ * @param twoLines a tuple with the signature followed parameters
+ */
 export const parseElmFunction = (
   twoLines: [string, string]
 ): FunctionInfo | false => {
@@ -102,8 +112,10 @@ export const parseElmFunction = (
   };
 };
 
-const isFunctionInfo = (value: unknown): value is FunctionInfo =>
-  typeof value === 'object' && value !== null;
-
+/**
+ * Parse an elm script file
+ * @param content the elm script
+ * @returns a list of functions for that script
+ */
 export const parseElmFunctions = (content: string): FunctionInfo[] =>
   findElmFunctionBlocks(content).map(parseElmFunction).filter(isFunctionInfo);

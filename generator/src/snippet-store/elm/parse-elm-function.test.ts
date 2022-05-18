@@ -1,4 +1,4 @@
-import { parseElmFunction, parseElmFunctions } from './parse-elm';
+import { parseElmFunction, parseElmFunctions } from './parse-elm-function';
 
 const elmCode = `
 module Bubblegum.Entity.Attribute exposing
